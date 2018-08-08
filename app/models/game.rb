@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   belongs_to :console
 
   def slug
-  name.downcase.gsub(" ","-")
+    name.downcase.gsub(" ","-")
   end
 
   def self.find_by_slug(slug)
