@@ -15,7 +15,7 @@ class GamesController < ApplicationController
 
   post '/games' do
   @game = Game.create(name: params["Name"])
-  @game.console = Game.find_or_create_by(name: params["Console Name"])
+  @game.console = Console.find_or_create_by(name: params["Console Name"])
   @game.save
   flash[:message] = "Successfully created game."
   redirect("/games/#{@game.slug}")
