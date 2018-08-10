@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   get '/signup' do
     if logged_in?
-      redirect to '/games/index'
+      redirect to '/games'
     else
         erb :'users/signup'
       end
@@ -17,10 +17,10 @@ class UsersController < ApplicationController
        if params[:username] == "" || params[:email] == "" || params[:password] == ""
          redirect to '/signup'
        else
-         @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
-         @user.save
+         @user = User.create(:username => params[:username], :email => params[:email], :password => params[:password])
+         binding.pry
          session[:user_id] = @user.id
-         redirect to '/games/index'
+         redirect to '/games'
        end
      end
 

@@ -37,7 +37,9 @@ class GamesController < ApplicationController
     end
 
     get '/games' do
-      @games = Game.all.sort_by!{ |game| game.name.downcase }
+      binding.pry
+      @games = Game.all
+      @user = current_user
       erb :'/games/index'
     end
 
