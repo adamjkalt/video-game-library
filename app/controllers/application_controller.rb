@@ -3,8 +3,8 @@ require './config/environment'
 class ApplicationController < Sinatra::Base
 
   configure do
+    set :session_secret, "SESSION_SECRET"
     enable :sessions
-    set :sessions_secret, "video_game_library_secret"
     set :public_folder, 'public'
     set :views, 'app/views'
   end

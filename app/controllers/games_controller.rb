@@ -3,6 +3,15 @@ require 'rack-flash'
 class GamesController < ApplicationController
   use Rack::Flash
 
+  get '/games' do
+    if logged_in?
+    @games = Game.all
+    @user = current_user
+    erb :'/games/index'
+  else
+    redirect to '/login'
+  end
+  end
 
   get '/games/new' do
       erb :'/games/new'
@@ -34,13 +43,6 @@ class GamesController < ApplicationController
       @game.save
       flash[:message] = "Successfully updated game."
       redirect("/games/#{@game.slug}")
-    end
-
-    get '/games' do
-      binding.pry
-      @games = Game.all
-      @user = current_user
-      erb :'/games/index'
     end
 
 end
