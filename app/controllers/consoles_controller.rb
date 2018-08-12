@@ -1,9 +1,14 @@
 class ConsolesController < ApplicationController
 
   get '/consoles' do
-    @consoles = Console.all.sort_by!{ |console| console.name.downcase }
-     erb :'/consoles/index'
-   end
+    if logged_in?
+    @consoles = Console.all
+    @user = current_user
+    erb :'/consoles/index'
+  else
+    redirect to '/login'
+  end
+  end
 
    get '/consoles/:slug' do
      @console = Console.find_by_slug(params[:slug])
