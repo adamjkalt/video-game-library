@@ -1,3 +1,11 @@
+<nav>
+
+  <p>Welcome, <%=@user.username %></p>
+  <a href="/logout"> Log Out </a>
+  <br>
+  <br>
+  <br>
+
 <ul>
 <% @consoles.each do |console| %>
 <li> <a href= '/consoles/<%=console.slug%>'> <%= console.name %> </a> </li>
@@ -10,6 +18,4 @@
 <br>
 <a href="/games"> View Games </a>
 <br>
-<br>
-<a href="/logout"> Log Out </a>
 <br>

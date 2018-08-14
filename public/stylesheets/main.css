@@ -112,4 +112,11 @@
     font-size: 18px;
     line-height: 24px;
   }
+
+
 }
+
+  li a {
+    color: blue;
+    font-size: 17px;
+  }

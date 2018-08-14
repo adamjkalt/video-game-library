@@ -5,8 +5,8 @@ class GamesController < ApplicationController
 
   get '/games' do
     if logged_in?
-    @games = Game.all
     @user = current_user
+    @games = @user.games
     erb :'/games/index'
   else
     redirect to '/login'
@@ -26,6 +26,8 @@ class GamesController < ApplicationController
   @game = Game.create(name: params["Name"])
   @game.console = Console.find_or_create_by(name: params["Console Name"])
   @game.save
+  current_user.games << @game
+  current_user.consoles << @game.console
   flash[:message] = "Successfully created game."
   redirect("/games/#{@game.slug}")
   end

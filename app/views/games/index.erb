@@ -6,6 +6,17 @@
   <br>
   <br>
 
+<h2> Your Games </h2>
+<br>
+
+<ul>
+<% @games.each do |game| %>
+<li> <a href= '/games/<%=game.slug%>'> <%= game.name %> </a> </li>
+<% end %>
+</ul>
+<br>
+<br>
+
     <a href="/games/new"> Add Games </a>
     <br>
     <br>
