@@ -1,4 +1,5 @@
 <h1>Edit <%= @game.name %></h1>
+<br>
 
 <form action="/games/<%= @game.slug %>" method="POST">
   <input type="hidden" name="_method" value="PATCH">
@@ -11,3 +12,11 @@
 
   <input type="submit" value="Save">
 </form>
+
+<br>
+<br>
+<a href="/games"> View Games </a>
+<br>
+<br>
+<a href="/logout"> Log Out </a>
+<br>
