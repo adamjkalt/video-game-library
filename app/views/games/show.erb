@@ -3,6 +3,12 @@
 
 <a href="/consoles/<%= @game.console.slug %>"> <%= @game.console.name %> </a>
 <br>
+<br>
+
+<form method="post" action="/games/<%=@game.name%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="Delete Game">
+</form>
 
 <br>
 <a href="/games/new"> Add Games </a>

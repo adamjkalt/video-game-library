@@ -1,7 +1,4 @@
-require 'rack-flash'
-
 class GamesController < ApplicationController
-  use Rack::Flash
 
   get '/games' do
     if logged_in?
@@ -28,7 +25,6 @@ class GamesController < ApplicationController
   @game.save
   current_user.games << @game
   current_user.consoles << @game.console
-  flash[:message] = "Successfully created game."
   redirect("/games/#{@game.slug}")
   end
 
@@ -43,8 +39,21 @@ class GamesController < ApplicationController
       @game.update(params[:game])
       @game.console = Console.find_or_create_by(name: params[:console][:name])
       @game.save
-      flash[:message] = "Successfully updated game."
       redirect("/games/#{@game.slug}")
     end
+
+    delete '/games/:slug/delete' do
+             if logged_in?
+               @game = Game.find_by_slug(params[:slug])
+               if @game == current_user
+                 @game.delete
+               redirect to '/games'
+              else
+                redirect to '/login'
+              end
+             else
+               redirect to '/login'
+             end
+           end
 
 end
