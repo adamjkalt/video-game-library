@@ -15,16 +15,16 @@ class GamesController < ApplicationController
     end
 
     get '/games/:slug' do
-      @game = Game.find_by_slug(params[:slug])
+      @game = current_user.games.find_by_slug(params[:slug])
       erb:'/games/show'
     end
 
   post '/games' do
-    if params[:name] == "" || params[:console_name] == ""
-        redirect to '/games/'
+    if params[:name].empty? || params[:console_name].empty?
+        redirect to '/games/new'
     else
-      @game = Game.create(name: params["Name"])
-      @game.console = Console.find_or_create_by(name: params["Console Name"])
+      @game = Game.create(name: params[:name])
+      @game.console = Console.find_or_create_by(name: params[:console_name])
       @game.save
       current_user.games << @game
       current_user.consoles << @game.console
