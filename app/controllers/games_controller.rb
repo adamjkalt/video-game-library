@@ -34,12 +34,12 @@ class GamesController < ApplicationController
 
 
   get '/games/:slug/edit' do
-      @game = Game.find_by_slug(params[:slug])
+      @game = current_user.games.find_by_slug(params[:slug])
       erb :'games/edit'
     end
 
     patch '/games/:slug' do
-      @game = Game.find_by_slug(params[:slug])
+      @game = current_user.games.find_by_slug(params[:slug])
       @game.update(params[:game])
       @game.console = Console.find_or_create_by(name: params[:console][:name])
       @game.save
