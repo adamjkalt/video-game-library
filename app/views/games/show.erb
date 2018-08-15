@@ -1,3 +1,7 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
+
 <h1> <%= @game.name %> </h1>
 <br>
 <h3> <a href="/consoles/<%= @game.console.slug %>"> <%= @game.console.name %> </a> </h3>

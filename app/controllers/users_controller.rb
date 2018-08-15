@@ -1,4 +1,7 @@
+require 'rack-flash'
+
 class UsersController < ApplicationController
+  use Rack::Flash
 
   get '/users/:slug' do
     @user = User.find_by_slug(params[:slug])
@@ -15,6 +18,9 @@ class UsersController < ApplicationController
 
     post '/signup' do
        if params[:username] == "" || params[:email] == "" || params[:password] == ""
+         redirect to '/signup'
+       elsif
+         User.find_by(:username => params[:username])
          redirect to '/signup'
        else
          @user = User.create(:username => params[:username], :email => params[:email], :password => params[:password])

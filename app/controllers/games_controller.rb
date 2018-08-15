@@ -1,4 +1,7 @@
+require 'rack-flash'
+
 class GamesController < ApplicationController
+  use Rack::Flash
 
   get '/games' do
     if logged_in?
@@ -39,11 +42,15 @@ class GamesController < ApplicationController
     end
 
     patch '/games/:slug' do
+      if params["game"]["name"].empty? || params["console"]["name"].empty?
+          redirect to '/games/edit'
+      else
       @game = current_user.games.find_by_slug(params[:slug])
       @game.update(params[:game])
       @game.console = Console.find_or_create_by(name: params[:console][:name])
       @game.save
       redirect("/games/#{@game.slug}")
+    end
     end
 
     delete '/games/:id/delete' do
