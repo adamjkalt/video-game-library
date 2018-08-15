@@ -24,6 +24,7 @@ class GamesController < ApplicationController
 
   post '/games' do
     if params[:name].empty? || params[:console_name].empty?
+      flash[:message] = "Please make sure to enter both a Game and a Console."
         redirect to '/games/new'
     else
       @game = Game.create(name: params[:name])
@@ -43,6 +44,7 @@ class GamesController < ApplicationController
 
     patch '/games/:slug' do
       if params["game"]["name"].empty? || params["console"]["name"].empty?
+        flash[:message] = "Please do not leave any form fields empty."
           redirect to '/games/edit'
       else
       @game = current_user.games.find_by_slug(params[:slug])

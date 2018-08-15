@@ -18,9 +18,11 @@ class UsersController < ApplicationController
 
     post '/signup' do
        if params[:username] == "" || params[:email] == "" || params[:password] == ""
+         flash[:message] = "Please fill out all form fields."
          redirect to '/signup'
        elsif
          User.find_by(:username => params[:username])
+         flash[:message] = "Username already exists.  Please enter a different Username."
          redirect to '/signup'
        else
          @user = User.create(:username => params[:username], :email => params[:email], :password => params[:password])
@@ -43,6 +45,7 @@ class UsersController < ApplicationController
          session[:user_id] = user.id
          redirect to '/games'
        else
+         flash[:message] = "Username and/or password incorrect. Please try again."
          redirect to '/users/login'
        end
      end
