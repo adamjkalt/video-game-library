@@ -20,12 +20,16 @@ class GamesController < ApplicationController
     end
 
   post '/games' do
-  @game = Game.create(name: params["Name"])
-  @game.console = Console.find_or_create_by(name: params["Console Name"])
-  @game.save
-  current_user.games << @game
-  current_user.consoles << @game.console
-  redirect("/games/#{@game.slug}")
+    if params[:name] == "" || params[:console_name] == ""
+        redirect to '/games/'
+    else
+      @game = Game.create(name: params["Name"])
+      @game.console = Console.find_or_create_by(name: params["Console Name"])
+      @game.save
+      current_user.games << @game
+      current_user.consoles << @game.console
+        redirect("/games/#{@game.slug}")
+      end
   end
 
 
@@ -42,15 +46,11 @@ class GamesController < ApplicationController
       redirect("/games/#{@game.slug}")
     end
 
-    delete '/games/:slug/delete' do
+    delete '/games/:id/delete' do
              if logged_in?
-               @game = Game.find_by_slug(params[:slug])
-               if @game == current_user
-                 @game.delete
-               redirect to '/games'
-              else
-                redirect to '/login'
-              end
+               @game = Game.find_by_id(params[:id])
+               @game.delete
+                redirect to '/games'
              else
                redirect to '/login'
              end
