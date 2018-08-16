@@ -44,9 +44,9 @@ class GamesController < ApplicationController
 
     patch '/games/:slug' do
       if params["game"]["name"].empty? || params["console"]["name"].empty?
-        flash[:message] = "Please do not leave any form fields empty."
-          redirect to '/games/edit'
-      else
+        flash[:message] = "Unable to edit game.  Please do not leave any form fields empty."
+          redirect to '/games'
+        else
       @game = current_user.games.find_by_slug(params[:slug])
       @game.update(params[:game])
       @game.console = Console.find_or_create_by(name: params[:console][:name])
