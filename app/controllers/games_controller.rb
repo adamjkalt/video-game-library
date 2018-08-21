@@ -26,7 +26,11 @@ class GamesController < ApplicationController
     if params[:name].empty? || params[:console_name].empty?
       flash[:message] = "Please make sure to enter both a Game and a Console."
         redirect to '/games/new'
-    else
+      elsif
+        current_user.games.find_by(:name => params[:name])
+        flash[:message] = "Game already exists for one console in your collection."
+        redirect to '/games/new'
+      else
       @game = Game.create(name: params[:name])
       @game.console = Console.find_or_create_by(name: params[:console_name])
       @game.save
@@ -45,7 +49,7 @@ class GamesController < ApplicationController
     patch '/games/:slug' do
       if params["game"]["name"].empty? || params["console"]["name"].empty?
         flash[:message] = "Unable to edit game.  Please do not leave any form fields empty."
-          redirect to '/games'
+          redirect to "/games/#{params[:slug]}/edit"
         else
       @game = current_user.games.find_by_slug(params[:slug])
       @game.update(params[:game])

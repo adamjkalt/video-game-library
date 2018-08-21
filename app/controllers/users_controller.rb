@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   end
 
   get '/signup' do
+    @duck = "quack"
     if logged_in?
       redirect to 'games'
     else
